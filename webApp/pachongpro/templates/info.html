@@ -2,9 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Info</title>
+    <title>Title</title>
+    <script src="/static/echarts.js"></script>
 </head>
 <body>
-    这是一个info
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 600px; height: 400px;"></div>
+
+<script>
+    //创建一个图表对象myChart, 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById("main"));
+    var num = JSON.parse('{{num}}');
+    // var num = [0, 0, 0, 0, 0]
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'python职位薪资图',
+            subtext: '',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['薪资：0～8000', '薪资：8000～9000', '薪资：9000～10000', '薪资：10000～12000', '薪资：> 12000']
+        },
+        series: [
+            {
+                name: '职位薪资',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                data: [
+                    {value: num[0], name: '薪资：0～8000'},
+                    {value: num[1], name: '薪资：8000～9000'},
+                    {value: num[2], name: '薪资：9000～10000'},
+                    {value: num[3], name: '薪资：10000～12000'},
+                    {value: num[4], name: '薪资：> 12000'},
+                ],
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
 </body>
 </html>
